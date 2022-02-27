@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.Classes;
+package ba.unsa.etf.rpr.classes;
 
 public class ElectionPartaker {
     private String name;

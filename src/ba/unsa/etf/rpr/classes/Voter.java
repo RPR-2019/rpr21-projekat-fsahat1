@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.Classes;
+package ba.unsa.etf.rpr.classes;
 
 public class Voter extends ElectionPartaker{
     private String ID;
@@ -8,6 +8,12 @@ public class Voter extends ElectionPartaker{
         super(name);
         this.ID = ID;
         this.voteStatus = voteStatus;
+    }
+
+    public Voter(String name, String ID) {
+        super(name);
+        this.ID = ID;
+        this.voteStatus = VoteStatus.NOT_REGISTERED;
     }
 
     public String getID() {

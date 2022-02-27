@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "voters" (
 	"id"	INTEGER,
 	"name"	TEXT,
-	"soc_number" INTEGER,
+	"soc_number" TEXT,
 	"vote_status"	INTEGER,
 	PRIMARY KEY("id")
 );
@@ -12,12 +12,13 @@ CREATE TABLE IF NOT EXISTS "parties" (
 	"id"	INTEGER,
 	"name"	TEXT,
 	"party_leader"	TEXT,
+	"votes" INTEGER
 	PRIMARY KEY("id")
 );
 
-INSERT INTO parties VALUES("1","Stranka razularene mase","Divljo Nesagovornicic");
-INSERT INTO parties VALUES("2","Ispod stola","Hapo Mazijalic");
-INSERT INTO parties VALUES("3","Europski put","Hans Jans Centrotrans");
+INSERT INTO parties VALUES("1","Stranka razularene mase","Divljo Nesagovornicic","0");
+INSERT INTO parties VALUES("2","Ispod stola","Hapo Mazijalic","0");
+INSERT INTO parties VALUES("3","Europski put","Hans Jans Centrotrans","0");
 
 CREATE TABLE IF NOT EXISTS "waitlist"(
     "id"	INTEGER,
