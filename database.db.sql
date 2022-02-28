@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "voters" (
 	PRIMARY KEY("id")
 );
 INSERT INTO voters VALUES("1","Tutan Kamon","12345","0");
-INSERT INTO voters VALUES("2","Demo Kratovic","12234","2","0");
+INSERT INTO voters VALUES("2","Demo Kratovic","12234","0");
 CREATE TABLE IF NOT EXISTS "parties" (
 	"id"	INTEGER,
 	"name"	TEXT,
