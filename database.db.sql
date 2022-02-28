@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS "waitlist"(
     "name"	TEXT,
     "party_leader"	TEXT,
     PRIMARY KEY("id")
-)
+);
 
 INSERT INTO waitlist VALUES("1","Partija Nidje Nas Nema", "Sabir Nestasica");
 INSERT INTO waitlist VALUES("2","Podrska Programerima Freelancerima", "Demetra Dvoklik");
