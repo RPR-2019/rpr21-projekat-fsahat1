@@ -20,6 +20,7 @@ public class VotingDAO {
     private PreparedStatement findVoterByID;
     private PreparedStatement invalidateBallotQuery;
     private PreparedStatement castVoteVoter, castVoteVotee;
+    private PreparedStatement registerPartyQuery;
 
     public static VotingDAO getInstance(){
         if(instance == null) instance = new VotingDAO();
@@ -52,6 +53,7 @@ public class VotingDAO {
             invalidateBallotQuery = conn.prepareStatement("UPDATE voters SET vote_status = -1 WHERE soc_number = ?");
             castVoteVoter = conn.prepareStatement("UPDATE voters SET vote_status = 1 WHERE soc_number = ?");
             castVoteVotee = conn.prepareStatement("UPDATE parties SET votes = ? WHERE name = ?");
+            registerPartyQuery = conn.prepareStatement("INSERT INTO waitlist VALUES (?,?,?)");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,8 +107,8 @@ public class VotingDAO {
         }
         instance = null; }
 
-    public ArrayDeque<PoliticalParty> parties(){
-        ArrayDeque<PoliticalParty> result = new ArrayDeque<>();
+    public ArrayList<PoliticalParty> parties(){
+        ArrayList<PoliticalParty> result = new ArrayList<>();
         ResultSet rs = null;
         try {
             rs = getPartiesQuery.executeQuery();
@@ -120,7 +122,7 @@ public class VotingDAO {
         return result;
     }
 
-    public List<PoliticalParty> waitlist(){
+    public ArrayList<PoliticalParty> waitlist(){
         ArrayList<PoliticalParty> result = new ArrayList<>();
         ResultSet rs = null;
         try {
@@ -218,6 +220,22 @@ public class VotingDAO {
     public void invalidateBallot(Voter voter) {
         try {
             invalidateBallotQuery.setString(1, voter.getID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registerNewParty(PoliticalParty party) {
+        int pos = 0;
+        ResultSet rs = null;
+        try {
+            rs = getWaitlistQuery.executeQuery();
+            while(rs.next()) pos = rs.getInt(1);
+            pos = pos + 1;
+            registerPartyQuery.setInt(1,pos);
+            registerPartyQuery.setString(2, party.getName());
+            registerPartyQuery.setString(3, party.getPartyLeader());
+            registerPartyQuery.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
