@@ -8,6 +8,7 @@ import ba.unsa.etf.rpr.classes.Voter;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class VotingDAO {
     private static VotingDAO instance = null;
@@ -21,6 +22,7 @@ public class VotingDAO {
     private PreparedStatement castVoteVoter, castVoteVotee;
     private PreparedStatement registerPartyQuery;
     private PreparedStatement addPartyQuery, deleteRegisteredParty;
+    private PreparedStatement resetWaitlist, resetParties, resetVoters;
 
     public static VotingDAO getInstance(){
         if(instance == null) instance = new VotingDAO();
@@ -56,6 +58,9 @@ public class VotingDAO {
             registerPartyQuery = conn.prepareStatement("INSERT INTO waitlist VALUES (?,?,?)");
             addPartyQuery = conn.prepareStatement("INSERT INTO parties VALUES (?,?,?,0)");
             deleteRegisteredParty = conn.prepareStatement("DELETE FROM waitlist WHERE name = ?");
+            resetWaitlist = conn.prepareStatement("DELETE FROM waitlist");
+            resetParties = conn.prepareStatement("DELETE FROM parties");
+            resetVoters = conn.prepareStatement("DELETE FROM voters");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -271,18 +276,56 @@ public class VotingDAO {
 
     public void writeToFile(File chosen) {
         if(chosen==null) return;
+        ArrayList<PoliticalParty> party = parties();
+        party = party.stream().sorted(Comparator.comparing(PoliticalParty::getVotes)).collect(Collectors.toCollection(ArrayList::new));
         try {
             FileWriter record = new FileWriter(chosen);
             String unos = "";
-            for(int i =0; i<parties().size(); i++){
-                unos = unos+parties().get(i).toString();
-                if(i<parties().size()-1) unos = unos +"\n";
+            for(int i =0; i<party.size(); i++){
+                unos = unos+party.get(i).toString();
+                if(i<party.size()-1) unos = unos +"\n";
             }
             record.write(unos);
             record.close();
         } catch (IOException e) {
             System.out.println("Writing to file failed");
             e.printStackTrace();
+        }
+    }
+
+    public void resetElection() {
+        try {
+            resetVoters.executeUpdate();
+            resetParties.executeUpdate();
+            resetWaitlist.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeFromFile(File chosen) {
+        if(chosen==null) return;
+        resetElection();
+        int i =0;
+        try {
+            Scanner myReader = new Scanner(chosen);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arrOfStr = data.split("/", 4);
+
+                PoliticalParty party = new PoliticalParty(arrOfStr[0], arrOfStr[1]);
+                addPartyQuery.setInt(1,i);
+                addPartyQuery.setString(2, party.getName());
+                addPartyQuery.setString(3, party.getPartyLeader());
+                addPartyQuery.executeUpdate();
+                i = i+1;
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

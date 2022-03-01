@@ -38,4 +38,9 @@ public class Voter extends ElectionPartaker implements Comparable<Voter>{
     public int compareTo(Voter o) {
         return this.ID.compareTo(o.ID);
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + voteStatus.toString() + "\n";
+    }
 }

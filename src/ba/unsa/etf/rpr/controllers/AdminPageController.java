@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.classes.PoliticalParty;
 import ba.unsa.etf.rpr.database_organization.VotingDAO;
+import ba.unsa.etf.rpr.report.PrintReport;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.File;
 import java.io.Serializable;
@@ -69,18 +71,30 @@ public class AdminPageController implements Initializable {
     }
 
     public void loadFromFile(ActionEvent actionEvent) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose input file");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("party list files", "plis"));
+        File chosen = chooser.showOpenDialog(tableWaitlist.getScene().getWindow());
+        if(chosen==null) return;
+        dao.writeFromFile(chosen);
     }
 
     public void outputIntoFile(ActionEvent actionEvent) {
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("Izaberite datoteku");
+        chooser.setTitle("Choose output file");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("results files", "elres"));
-        File chosen = chooser.showOpenDialog(tableWaitlist.getScene().getWindow());
+        File chosen = chooser.showSaveDialog(tableWaitlist.getScene().getWindow());
         if(chosen==null) return;
         dao.writeToFile(chosen);
     }
 
     public void getReport(ActionEvent actionEvent) {
+        try {
+            new PrintReport().showReport(dao.getConn());
+        } catch (JRException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     public void openAbout(ActionEvent actionEvent) {
@@ -98,6 +112,7 @@ public class AdminPageController implements Initializable {
     }
 
     public void resetElection(ActionEvent actionEvent) {
+        dao.resetElection();
     }
 
 }
