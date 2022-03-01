@@ -14,10 +14,12 @@ public class VotingDAO {
     private static VotingDAO instance = null;
     private Connection conn;
     private PreparedStatement addVoterQuery;
-    private PreparedStatement getPartiesQuery;
+    private PreparedStatement getPartiesQuery, getPartyQuery;
     private PreparedStatement getVotersQuery;
     private PreparedStatement getWaitlistQuery;
     private PreparedStatement findVoterByID;
+    private PreparedStatement invalidateBallotQuery;
+    private PreparedStatement castVoteVoter, castVoteVotee;
 
     public static VotingDAO getInstance(){
         if(instance == null) instance = new VotingDAO();
@@ -43,9 +45,13 @@ public class VotingDAO {
         }
         try {
             getPartiesQuery = conn.prepareStatement("SELECT * FROM parties");
+            getPartyQuery = conn.prepareStatement("SELECT votes FROM parties WHERE name = ?");
             getVotersQuery = conn.prepareStatement("SELECT * FROM voters");
             getWaitlistQuery = conn.prepareStatement("SELECT * FROM waitlist");
             findVoterByID = conn.prepareStatement("SELECT * FROM voters WHERE soc_number = ?");
+            invalidateBallotQuery = conn.prepareStatement("UPDATE voters SET vote_status = -1 WHERE soc_number = ?");
+            castVoteVoter = conn.prepareStatement("UPDATE voters SET vote_status = 1 WHERE soc_number = ?");
+            castVoteVotee = conn.prepareStatement("UPDATE parties SET votes = ? WHERE name = ?");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -185,6 +191,33 @@ public class VotingDAO {
                 default -> addVoterQuery.setInt(4, 0);
             }
             addVoterQuery.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void castVote(PoliticalParty party, Voter voter) {
+        int votes=0;
+        ResultSet rs = null;
+        try {
+            getPartyQuery.setString(1, party.getName());
+            rs = getPartyQuery.executeQuery();
+            while(rs.next()){
+                votes = rs.getInt(4);
+            }
+            castVoteVotee.setInt(1, votes+1);
+            castVoteVotee.setString(2, party.getName());
+            castVoteVotee.executeUpdate();
+            castVoteVoter.setString(1, voter.getID());
+            castVoteVoter.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void invalidateBallot(Voter voter) {
+        try {
+            invalidateBallotQuery.setString(1, voter.getID());
         } catch (SQLException e) {
             e.printStackTrace();
         }

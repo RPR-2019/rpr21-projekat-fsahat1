@@ -75,7 +75,7 @@ public class VotingStationController {
             return;
         }
         party =(PoliticalParty) partiesList.getSelectionModel().getSelectedItem();
-        //dao.castVote(party, voter);
+        dao.castVote(party, voter);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Voting process");
         alert.setHeaderText("Success");
@@ -97,11 +97,11 @@ public class VotingStationController {
         myStage.show();
 
         myStage.setOnHiding(e -> {
-            //if(noviController.getAddStatus()){
-            //    dao.invalidateBallot(voter);
-           //     Stage stage = (Stage) partiesList.getScene().getWindow();
-            //    stage.close();
-            //}
+            if(noviController.isAddStatus()){
+                dao.invalidateBallot(voter);
+                Stage stage = (Stage) partiesList.getScene().getWindow();
+                stage.close();
+            }
         });
     }
 
