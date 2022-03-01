@@ -18,8 +18,8 @@
    <children>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" text="Ok" />
-            <Button cancelButton="true" mnemonicParsing="false" text="Cancel" />
+          <Button fx:id="btnOk" defaultButton="true" mnemonicParsing="false" onAction="#clkOk" text="Ok" />
+            <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#clkCancel" text="Cancel" />
         </buttons>
          <GridPane.margin>
             <Insets />

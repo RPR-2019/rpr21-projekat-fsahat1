@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.classes;
 
-public class Voter extends ElectionPartaker{
+public class Voter extends ElectionPartaker implements Comparable<Voter>{
     private String ID;
     private VoteStatus voteStatus;
 
@@ -13,8 +13,10 @@ public class Voter extends ElectionPartaker{
     public Voter(String name, String ID) {
         super(name);
         this.ID = ID;
-        this.voteStatus = VoteStatus.NOT_REGISTERED;
+        this.voteStatus = VoteStatus.NOT_VOTED;
     }
+
+
 
     public String getID() {
         return ID;
@@ -30,5 +32,10 @@ public class Voter extends ElectionPartaker{
 
     public void setVoteStatus(VoteStatus voteStatus) {
         this.voteStatus = voteStatus;
+    }
+
+    @Override
+    public int compareTo(Voter o) {
+        return this.ID.compareTo(o.ID);
     }
 }

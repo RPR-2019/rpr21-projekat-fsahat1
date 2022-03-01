@@ -4,22 +4,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.VotingStationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <Button mnemonicParsing="false" text="Help" />
-          <Button mnemonicParsing="false" text="Language" />
+            <Button fx:id="btnHelp" mnemonicParsing="false" onAction="#openHelp" text="Help" />
+          <Button fx:id="btnLanguage" mnemonicParsing="false" text="Language" />
             <Separator orientation="VERTICAL" />
-            <Button mnemonicParsing="false" text="About" />
+            <Button fx:id="btnAbout" mnemonicParsing="false" onAction="#openAbout" text="About" />
         </items>
       </ToolBar>
    </top>
    <center>
-      <TableView maxHeight="1.7976931348623157E308" BorderPane.alignment="TOP_CENTER">
+      <TableView fx:id="partiesList" maxHeight="1.7976931348623157E308" BorderPane.alignment="TOP_CENTER">
         <columns>
-            <TableColumn maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" text="Party" />
-            <TableColumn prefWidth="230.0" text="Party Leader" />
+            <TableColumn fx:id="partyColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" text="Party" />
+            <TableColumn fx:id="leaderColumn" prefWidth="230.0" text="Party Leader" />
         </columns>
          <BorderPane.margin>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
@@ -29,9 +29,9 @@
    <right>
       <VBox alignment="CENTER" spacing="24.0" BorderPane.alignment="CENTER">
          <children>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cast vote" />
-            <Button mnemonicParsing="false" text="Mark ballot as invalid" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cancel voting" />
+            <Button fx:id="btnCastVote" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#castVote" text="Cast vote" />
+            <Button fx:id="btnMarkBallot" mnemonicParsing="false" onAction="#invalidateBallot" text="Mark ballot as invalid" />
+            <Button fx:id="btnCancel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelVoting" text="Cancel voting" />
          </children>
          <BorderPane.margin>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />

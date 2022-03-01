@@ -42,12 +42,12 @@
         <menus>
           <Menu mnemonicParsing="false" text="Election">
             <items>
-              <MenuItem mnemonicParsing="false" text="Load from File" />
-                  <MenuItem mnemonicParsing="false" text="Output into File" />
+              <MenuItem fx:id="menuLoadFile" mnemonicParsing="false" onAction="#loadFromFile" text="Load from File" />
+                  <MenuItem fx:id="menuOutputFile" mnemonicParsing="false" onAction="#outputIntoFile" text="Output into File" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Get report" />
+                  <MenuItem fx:id="menuGetReport" mnemonicParsing="false" onAction="#getReport" text="Get report" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Exit" />
+                  <MenuItem fx:id="Exit" mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

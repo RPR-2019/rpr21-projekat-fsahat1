@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS "parties" (
 	"id"	INTEGER,
 	"name"	TEXT,
 	"party_leader"	TEXT,
-	"votes" INTEGER
+	"votes" INTEGER,
 	PRIMARY KEY("id")
 );
 

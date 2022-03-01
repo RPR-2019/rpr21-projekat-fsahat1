@@ -19,11 +19,9 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 public class LandingController implements Initializable {
 
     public ImageView imgFlag;
-    public VotingDAO dao;
 
     public LandingController(){
         imgFlag = new ImageView();
-        dao = VotingDAO.getInstance();
     }
 
     @Override
@@ -34,12 +32,12 @@ public class LandingController implements Initializable {
 
     public void openVoting(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/votingstation.fxml"));
-        //VotingStationController noviController = new VotingStationController(dao.parties());
-        //loader.setController(noviController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/loginregister.fxml"));
+        LoginRegisterController noviController = new LoginRegisterController();
+        loader.setController(noviController);
         Parent root = loader.load();
 
-        myStage.setTitle("Voting");
+        myStage.setTitle("Login/register");
         myStage.setScene(new Scene(loader.getRoot(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
     }

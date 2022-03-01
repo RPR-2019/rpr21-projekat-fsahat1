@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.database_organization;
 import ba.unsa.etf.rpr.classes.PoliticalParty;
 import ba.unsa.etf.rpr.classes.VoteStatus;
 import ba.unsa.etf.rpr.classes.Voter;
+import exceptions.NonexistantVoterException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +17,7 @@ public class VotingDAO {
     private PreparedStatement getPartiesQuery;
     private PreparedStatement getVotersQuery;
     private PreparedStatement getWaitlistQuery;
+    private PreparedStatement findVoterByID;
 
     public static VotingDAO getInstance(){
         if(instance == null) instance = new VotingDAO();
@@ -43,6 +45,7 @@ public class VotingDAO {
             getPartiesQuery = conn.prepareStatement("SELECT * FROM parties");
             getVotersQuery = conn.prepareStatement("SELECT * FROM voters");
             getWaitlistQuery = conn.prepareStatement("SELECT * FROM waitlist");
+            findVoterByID = conn.prepareStatement("SELECT * FROM voters WHERE soc_number = ?");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,7 +55,7 @@ public class VotingDAO {
     private void regenerateBase() {
         Scanner enter = null;
         try {
-            enter = new Scanner(new FileInputStream("baza.db.sql"));
+            enter = new Scanner(new FileInputStream("database.db.sql"));
             String sqlQuery = "";
             while (enter.hasNext()){
                 sqlQuery += enter.nextLine();
@@ -96,7 +99,7 @@ public class VotingDAO {
         }
         instance = null; }
 
-    public Deque<PoliticalParty> parties(){
+    public ArrayDeque<PoliticalParty> parties(){
         ArrayDeque<PoliticalParty> result = new ArrayDeque<>();
         ResultSet rs = null;
         try {
@@ -150,10 +153,40 @@ public class VotingDAO {
         switch(rs.getInt(4)){
             case 0 -> voter.setVoteStatus(VoteStatus.NOT_VOTED);
             case 1 -> voter.setVoteStatus(VoteStatus.VOTED);
-            default -> voter.setVoteStatus(VoteStatus.NOT_REGISTERED);
+            default -> voter.setVoteStatus(VoteStatus.NOT_VALID);
         }
         return voter;
     }
 
     public Connection getConn(){ return conn;}
+
+    public int checkVoter(String string) throws NonexistantVoterException {
+        int res = 0;
+        ResultSet rs = null;
+        try {
+            findVoterByID.setString(1,string);
+            rs = findVoterByID.executeQuery();
+            if(!rs.next()) throw new NonexistantVoterException();
+            else res = rs.getInt(4);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public void addVoter(Voter voter) {
+        int size = voters().size();
+        try {
+            addVoterQuery.setInt(1, size+1);
+            addVoterQuery.setString(2, voter.getName());
+            addVoterQuery.setString(3, voter.getID());
+            switch(voter.getVoteStatus()){
+                case VOTED -> addVoterQuery.setInt(4,1);
+                default -> addVoterQuery.setInt(4, 0);
+            }
+            addVoterQuery.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

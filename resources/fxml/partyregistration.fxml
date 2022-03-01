@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.2" fx:controller="ba.unsa.etf.rpr.controllers.PartyRegistrationController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.PartyRegistrationController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,11 +27,11 @@
       </Label>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" text="Register" />
-            <Button cancelButton="true" mnemonicParsing="false" text="Cancel" />
+          <Button fx:id="btnRegister" defaultButton="true" mnemonicParsing="false" onAction="#registerParty" text="Register" />
+            <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#cancelRegistration" text="Cancel" />
         </buttons>
       </ButtonBar>
-      <TextField GridPane.columnIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="txtPartyName" GridPane.columnIndex="1" />
+      <TextField fx:id="txtPartyLeader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>
