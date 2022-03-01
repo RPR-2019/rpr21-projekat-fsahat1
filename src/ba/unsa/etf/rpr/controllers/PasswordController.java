@@ -37,8 +37,6 @@ public class PasswordController {
             myStage.setScene(new Scene(loader.getRoot(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.show();
 
-            Stage stage = (Stage) fldPasswd.getScene().getWindow();
-            stage.close();
 
             myStage.setOnHiding(e -> {
                 open = newController.isOpenElection();

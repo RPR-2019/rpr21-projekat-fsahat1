@@ -43,7 +43,7 @@ public class LoginRegisterController implements Initializable {
     public void enterStation(ActionEvent actionEvent) throws IOException {
         boolean valid = true;
         AtomicBoolean voted = new AtomicBoolean(false);
-        AtomicBoolean exists = new AtomicBoolean(false);
+        AtomicBoolean exists = new AtomicBoolean(true);
         Platform.runLater(()-> {
             try {
                 System.out.println("evo nas");
@@ -51,7 +51,7 @@ public class LoginRegisterController implements Initializable {
             } catch (NonexistantVoterException e) {
                 exists.set(false);
             }
-            System.out.println("stigli smo");
+            System.out.println(exists.get() +" "+ voted.get());
         });
         if(fldNameSurname.textProperty().isEmpty().get()){
             fldNameSurname.getStyleClass().removeAll("validField");
@@ -79,6 +79,7 @@ public class LoginRegisterController implements Initializable {
             alert.show();
             return;
         }
+        System.out.println(exists.get() + " " + voted.get());
         if(exists.get()){
             if(voted.get()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -87,6 +88,7 @@ public class LoginRegisterController implements Initializable {
                 alert.setContentText("You have already voted in this voting period, thank you for participating.");
                 alert.show();
                 cancel(new ActionEvent());
+                return;
             }
             else{
                 voter = new Voter(fldNameSurname.getText(), fldID.getText());
@@ -100,6 +102,7 @@ public class LoginRegisterController implements Initializable {
                 myStage.setScene(new Scene(loader.getRoot(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.show();
                 cancel(new ActionEvent());
+                return;
             }
         }
         voter = new Voter(fldNameSurname.getText(), fldID.getText());

@@ -16,16 +16,6 @@
          </BorderPane.margin>
       </TableView>
    </center>
-   <bottom>
-      <ToggleButton fx:id="btnPolling" mnemonicParsing="false" onAction="#toggleElection" text="Open polling station" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-         </BorderPane.margin>
-      </ToggleButton>
-   </bottom>
    <right>
       <VBox alignment="CENTER" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
@@ -59,4 +49,11 @@
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+      <CheckBox fx:id="btnPolling" mnemonicParsing="false" onAction="#toggleElection" text="Open/Close polling stations" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </CheckBox>
+   </bottom>
 </BorderPane>

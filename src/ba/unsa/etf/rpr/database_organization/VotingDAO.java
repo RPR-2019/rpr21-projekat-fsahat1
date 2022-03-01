@@ -48,7 +48,7 @@ public class VotingDAO {
         }
         try {
             getPartiesQuery = conn.prepareStatement("SELECT * FROM parties");
-            getPartyQuery = conn.prepareStatement("SELECT votes FROM parties WHERE name = ?");
+            getPartyQuery = conn.prepareStatement("SELECT * FROM parties WHERE name = ?");
             getVotersQuery = conn.prepareStatement("SELECT * FROM voters");
             getWaitlistQuery = conn.prepareStatement("SELECT * FROM waitlist");
             findVoterByID = conn.prepareStatement("SELECT * FROM voters WHERE soc_number = ?");
@@ -314,7 +314,7 @@ public class VotingDAO {
             Scanner myReader = new Scanner(chosen);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                String[] arrOfStr = data.split("/", 4);
+                String[] arrOfStr = data.split("/", 2);
 
                 PoliticalParty party = new PoliticalParty(arrOfStr[0], arrOfStr[1]);
                 addPartyQuery.setInt(1,i);

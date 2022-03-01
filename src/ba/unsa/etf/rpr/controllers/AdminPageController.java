@@ -6,10 +6,7 @@ import ba.unsa.etf.rpr.report.PrintReport;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,8 +20,9 @@ import java.util.ResourceBundle;
 public class AdminPageController implements Initializable {
     public TableColumn tblParty;
     public TableColumn tblLeader;
-    public ToggleButton btnPolling = new ToggleButton();
+
     public TableView tableWaitlist;
+    public CheckBox btnPolling = new CheckBox();
     private VotingDAO dao;
     boolean openElection = false;
 
@@ -73,7 +71,7 @@ public class AdminPageController implements Initializable {
     public void loadFromFile(ActionEvent actionEvent) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choose input file");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("party list files", "plis"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("party list files", "txt"));
         File chosen = chooser.showOpenDialog(tableWaitlist.getScene().getWindow());
         if(chosen==null) return;
         dao.writeFromFile(chosen);
