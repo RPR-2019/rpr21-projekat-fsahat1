@@ -73,7 +73,7 @@ public class LoginRegisterController implements Initializable {
             fldID.getStyleClass().removeAll("nonValidField");
         }
         if(!valid){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Voting login/registration");
             alert.setHeaderText("Information Error");
             alert.setContentText("The data you have entered is invalid, please try again");
@@ -82,7 +82,7 @@ public class LoginRegisterController implements Initializable {
         }
         if(exists.get()){
             if(voted.get()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Voting login/registration");
                 alert.setHeaderText("Previous Vote Registered");
                 alert.setContentText("You have already voted in this voting period, thank you for participating.");
