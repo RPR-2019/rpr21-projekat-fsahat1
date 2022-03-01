@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 public class LandingController implements Initializable {
 
     public ImageView imgFlag;
-
+    boolean open = false;
     public LandingController(){
         imgFlag = new ImageView();
     }
@@ -33,8 +34,8 @@ public class LandingController implements Initializable {
     public void openVoting(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/loginregister.fxml"));
-        LoginRegisterController noviController = new LoginRegisterController();
-        loader.setController(noviController);
+        LoginRegisterController newController = new LoginRegisterController();
+        loader.setController(newController);
         Parent root = loader.load();
 
         myStage.setTitle("Login/register");
@@ -42,19 +43,47 @@ public class LandingController implements Initializable {
         myStage.show();
     }
 
-    public void openRegister(ActionEvent actionEvent) {
+    public void openRegister(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/partyregistration.fxml"));
+        LoginRegisterController newController = new LoginRegisterController();
+        loader.setController(newController);
+        Parent root = loader.load();
+
+        myStage.setTitle("Register your party");
+        myStage.setScene(new Scene(loader.getRoot(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
     }
 
     public void openAdmin(ActionEvent actionEvent) {
     }
 
     public void openHelp(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("DemokratiJA");
+        alert.setHeaderText("Help");
+        alert.setContentText("If you wish to vote for existing parties, select the first option." +
+                "\nIf you wish to register your party for the upcoming election, select the second option." +
+                "\nIf you have already voted/registered, follow the results by selecting the last option.");
+        alert.show();
+        return;
     }
 
     public void openAbout(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("DemokratiJA");
+        alert.setHeaderText("About");
+        alert.setContentText("DemokratiJA\nUnofficial voting aid prototype" +
+                "Version 0.1, created by Faruk Sahat for the RPR final exam");
+        alert.show();
     }
 
     public void openLanguage(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("DemokratiJA");
+        alert.setHeaderText("Unfortunately. . .");
+        alert.setContentText("Other languages are not yet supported in this version.");
+        alert.show();
     }
 
     public void openResults(ActionEvent actionEvent) {

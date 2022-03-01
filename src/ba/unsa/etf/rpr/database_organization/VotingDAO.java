@@ -3,10 +3,9 @@ package ba.unsa.etf.rpr.database_organization;
 import ba.unsa.etf.rpr.classes.PoliticalParty;
 import ba.unsa.etf.rpr.classes.VoteStatus;
 import ba.unsa.etf.rpr.classes.Voter;
-import exceptions.NonexistantVoterException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+import java.io.*;
 import java.sql.*;
 import java.util.*;
 
@@ -21,6 +20,7 @@ public class VotingDAO {
     private PreparedStatement invalidateBallotQuery;
     private PreparedStatement castVoteVoter, castVoteVotee;
     private PreparedStatement registerPartyQuery;
+    private PreparedStatement addPartyQuery, deleteRegisteredParty;
 
     public static VotingDAO getInstance(){
         if(instance == null) instance = new VotingDAO();
@@ -54,6 +54,8 @@ public class VotingDAO {
             castVoteVoter = conn.prepareStatement("UPDATE voters SET vote_status = 1 WHERE soc_number = ?");
             castVoteVotee = conn.prepareStatement("UPDATE parties SET votes = ? WHERE name = ?");
             registerPartyQuery = conn.prepareStatement("INSERT INTO waitlist VALUES (?,?,?)");
+            addPartyQuery = conn.prepareStatement("INSERT INTO parties VALUES (?,?,?,0)");
+            deleteRegisteredParty = conn.prepareStatement("DELETE FROM waitlist WHERE name = ?");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -237,6 +239,49 @@ public class VotingDAO {
             registerPartyQuery.setString(3, party.getPartyLeader());
             registerPartyQuery.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteParty(PoliticalParty party) {
+        try {
+            deleteRegisteredParty.setString(1,party.getName());
+            deleteRegisteredParty.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addElectableParty(PoliticalParty party) {
+        int pos = 0;
+        ResultSet rs = null;
+        try {
+            rs = getPartiesQuery.executeQuery();
+            while(rs.next()) pos = rs.getInt(1);
+            pos = pos + 1;
+            addPartyQuery.setInt(1,pos);
+            addPartyQuery.setString(2, party.getName());
+            addPartyQuery.setString(3, party.getPartyLeader());
+            addPartyQuery.executeUpdate();
+            deleteParty(party);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFile(File chosen) {
+        if(chosen==null) return;
+        try {
+            FileWriter record = new FileWriter(chosen);
+            String unos = "";
+            for(int i =0; i<parties().size(); i++){
+                unos = unos+parties().get(i).toString();
+                if(i<parties().size()-1) unos = unos +"\n";
+            }
+            record.write(unos);
+            record.close();
+        } catch (IOException e) {
+            System.out.println("Writing to file failed");
             e.printStackTrace();
         }
     }

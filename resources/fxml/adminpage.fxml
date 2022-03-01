@@ -6,10 +6,10 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.AdminPageController">
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableWaitlist" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="-1.0" text="Party" />
-          <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Party leader" />
+          <TableColumn fx:id="tblParty" prefWidth="-1.0" text="Party" />
+          <TableColumn fx:id="tblLeader" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Party leader" />
         </columns>
          <BorderPane.margin>
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -17,7 +17,7 @@
       </TableView>
    </center>
    <bottom>
-      <ToggleButton mnemonicParsing="false" text="Open polling station" BorderPane.alignment="CENTER">
+      <ToggleButton fx:id="btnPolling" mnemonicParsing="false" onAction="#toggleElection" text="Open polling station" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
@@ -29,8 +29,8 @@
    <right>
       <VBox alignment="CENTER" spacing="8.0" BorderPane.alignment="CENTER">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Approve application" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Deny application" />
+            <Button fx:id="btnApprove" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveApplication" text="Approve application" />
+            <Button fx:id="btnDeny" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#denyApplication" text="Deny application" />
          </children>
          <padding>
             <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
@@ -47,12 +47,13 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuGetReport" mnemonicParsing="false" onAction="#getReport" text="Get report" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="Exit" mnemonicParsing="false" text="Exit" />
+                  <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#resetElection" text="Begin new election" />
+                  <MenuItem fx:id="Exit" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#openAbout" text="About" />
             </items>
           </Menu>
         </menus>

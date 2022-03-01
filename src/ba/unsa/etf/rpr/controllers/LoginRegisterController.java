@@ -1,14 +1,13 @@
 package ba.unsa.etf.rpr.controllers;
 
-import ba.unsa.etf.rpr.classes.VoteStatus;
 import ba.unsa.etf.rpr.classes.Voter;
+import ba.unsa.etf.rpr.database_organization.NonexistantVoterException;
 import ba.unsa.etf.rpr.database_organization.VotingDAO;
-import exceptions.NonexistantVoterException;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
