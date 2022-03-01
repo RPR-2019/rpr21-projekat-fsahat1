@@ -135,7 +135,7 @@ public class VotingDAO {
         try {
             rs = getWaitlistQuery.executeQuery();
             while(rs.next()){
-                PoliticalParty politicalParty = getPartyFromResultSet(rs);
+                PoliticalParty politicalParty = getPartyFromWaitlist(rs);
                 result.add(politicalParty);
             }
         } catch (SQLException e){
@@ -146,6 +146,9 @@ public class VotingDAO {
 
     private PoliticalParty getPartyFromResultSet(ResultSet rs) throws SQLException{
         return new PoliticalParty(rs.getString(2), rs.getString(3), rs.getInt(4));
+    }
+    private PoliticalParty getPartyFromWaitlist(ResultSet rs) throws SQLException{
+        return new PoliticalParty(rs.getString(2), rs.getString(3),0);
     }
 
     public SortedSet<Voter> voters (){

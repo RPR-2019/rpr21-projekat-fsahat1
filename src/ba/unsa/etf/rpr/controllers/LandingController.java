@@ -32,6 +32,14 @@ public class LandingController implements Initializable {
     }
 
     public void openVoting(ActionEvent actionEvent) throws IOException {
+        if(open == false){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("DemokratiJA");
+            alert.setHeaderText("Early access error");
+            alert.setContentText("The polls have not been opened yet. Please, try again later.");
+            alert.show();
+            return;
+        }
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/loginregister.fxml"));
         LoginRegisterController newController = new LoginRegisterController();
@@ -46,7 +54,7 @@ public class LandingController implements Initializable {
     public void openRegister(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/partyregistration.fxml"));
-        LoginRegisterController newController = new LoginRegisterController();
+        PartyRegistrationController newController = new PartyRegistrationController();
         loader.setController(newController);
         Parent root = loader.load();
 
@@ -55,7 +63,20 @@ public class LandingController implements Initializable {
         myStage.show();
     }
 
-    public void openAdmin(ActionEvent actionEvent) {
+    public void openAdmin(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/password.fxml"));
+        PasswordController newController = new PasswordController(open);
+        loader.setController(newController);
+        Parent root = loader.load();
+
+        myStage.setTitle("Register your party");
+        myStage.setScene(new Scene(loader.getRoot(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
+
+        myStage.setOnHiding(e -> {
+            open = newController.isOpen();
+        });
     }
 
     public void openHelp(ActionEvent actionEvent) {

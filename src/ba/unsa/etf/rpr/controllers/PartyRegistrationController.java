@@ -25,6 +25,7 @@ public class PartyRegistrationController {
     public PartyRegistrationController(){
         txtPartyName = new TextField();
         txtPartyLeader = new TextField();
+        dao = VotingDAO.getInstance();
     }
 
     public void registerParty(ActionEvent actionEvent) throws IOException {

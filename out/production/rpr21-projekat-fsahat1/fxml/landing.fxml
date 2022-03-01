@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ImageView fx:id="imgFlag" fitHeight="300.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin></ImageView>
+   </center>
+   <right>
+      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="INSIDE" strokeWidth="5.0" text="DemokratiJA">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <stroke>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.00432504853233695" green="0.3917773365974426" blue="0.9342105388641357" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </stroke></Text>
+            <Label text="official voting system prototype" />
+            <Button fx:id="btnVoter" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openVoting" text="I'm a voter" />
+            <Button fx:id="btnParty" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openRegister" text="I'm a political party representative" />
+            <Button fx:id="btnAdmin" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openAdmin" text="I'm an administrator" />
+            <Button fx:id="btnResults" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openResults" text="I wish to see the results so far" />
+            <ButtonBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+              <buttons>
+                <Button fx:id="btnHelp" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openHelp" text="Help" textAlignment="CENTER" />
+                  <Button fx:id="btnAbout" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openAbout" text="About" />
+                  <Button fx:id="btnLanguage" mnemonicParsing="false" onAction="#openLanguage" text="Language" />
+              </buttons>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="22.0" />
+               </padding>
+            </ButtonBar>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </right>
+</BorderPane>

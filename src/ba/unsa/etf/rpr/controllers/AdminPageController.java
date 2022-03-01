@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class AdminPageController implements Initializable {
     public TableColumn tblParty;
     public TableColumn tblLeader;
-    public ToggleButton btnPolling;
+    public ToggleButton btnPolling = new ToggleButton();
     public TableView tableWaitlist;
     private VotingDAO dao;
     boolean openElection = false;
